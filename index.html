@@ -15,13 +15,13 @@
         <div id="home">
             <div class="main-stats">
                 <div class="main-stats-stat">
-                    <span id="main-standard_units">
+                    <span id="main-amount_drinken">
                         0,33 l
                     </span>
                     <p>Volym</p>
                 </div>
                 <div class="main-stats-stat">
-                    <span id="main-standard_units">
+                    <span id="main-amount_of_drunken_units">
                         2 st
                     </span>
                     <p>Enheter</p>
@@ -33,7 +33,7 @@
                     <p>Standardenheter</p>
                 </div>
             </div>
-            <div id="new-unit" onclick="openNewUnitWindow()">
+            <div class="action-button" id="new-unit" onclick="openNewUnitWindow()">
                 + Lägg till enhet
             </div>
         </div>
@@ -49,7 +49,7 @@
                     <span id="main-starting_time">
                         14:00
                     </span>
-                    <p>Äldsta intag</p>
+                    <p>Första dryck</p>
                 </div>
                 <div class="main-stats-stat">
                     <span id="main-alkhol_gram">
@@ -60,16 +60,22 @@
             </div>
         </div>
         <div id="history">
-            <div class="history-drinks">
+            <div class="history-drinks" id="history-units">
                 <div class="unit" id="unit-hash-hash">
                     <div class="unit-left">
                         <p>Intag: 14:00</p>
+                        <p>Typ: Öl</p>
                         <p>Volym: 33 cl</p>
                         <p>Alkoholhalt: 5 %</p>
                         <p>Standardenhet: 1 st</p>
                     </div>
+                    <div class="unit-right" onclick="setAsFirstDrink('hash-hash')">
+                        <span>🖋</span>
+                        <p>Första dryck</p>
+                    </div>
                     <div class="unit-right" onclick="removeUnit('ididiaididi')">
-                        <p>🗑️</p>
+                        <span>🗑️</span>
+                        <p>Ta bort</p>
                     </div>
                 </div>
             </div>
@@ -121,7 +127,7 @@
         <div class="new-unit-window-content">
             <div>
                 <label for="new-unit-template">Färdig dryck</label>
-                <select id="new-unit-template" name="new-unit-template">
+                <select id="new-unit-template" name="new-unit-template" onchange="autoFillWithTemplate(this.value)">
                     <option value="" selected>Välj dryck</option>
                     <option value="lucky-bait">Lucky Bait</option>
                 </select>
@@ -129,6 +135,7 @@
             <div>
                 <label for="new-unit-date">Datum</label>
                 <input type="date" id="new-unit-date" name="new-unit-date">
+            </div>
             <div>
                 <label for="new-unit-time">Tid</label>
                 <input type="time" id="new-unit-time" name="new-unit-time">
@@ -136,7 +143,7 @@
             <div>
                 <label for="new-unit-type">Typ</label>
                 <select id="new-unit-type" name="new-unit-type">
-                    <option value="" selected disabled hidden>Välj typ</option>
+                    <option value="unspecified" selected disabled hidden>Välj typ</option>
                     <option value="beer">Öl</option>
                     <option value="cider">Cider</option>
                     <option value="wine">Vin</option>
@@ -154,8 +161,41 @@
                 <input type="number" id="new-unit-alcohol" name="new-unit-alcohol" value="">
             </div>
             <div>
+                <label for="new-unit-first_drink">Första dryck?</label>
+                <select id="new-unit-first_drink" name="new-unit-first_drink">
+                    <option value="false" selected>Nej</option>
+                    <option value="true">Ja</option>
+                </select>
+            </div>
+            <div>
                 <button onclick="addUnit()">Lägg till</button>
             </div>
+        </div>
+    </div>
+    <div class="history-yes-no-window" id="remove-unit-window">
+        <div>
+            <span>Vill du ta bort drycken som intogs <span>14:00</span>?</span>
+            <span>
+                <div id="remove-unit-window-yes" style="background-color: green;">
+                    Ja
+                </div>
+                <div id="remove-unit-window-no" style="background-color: red;">
+                    Nej
+                </div> 
+            </span>
+        </div>
+    </div>
+    <div class="history-yes-no-window" id="set-first-drink-window">
+        <div>
+            <span>Vill du ange denna som dryck som intogs <span>14:00</span> som första dryck?</span>
+            <span>
+                <div style="background-color: green;">
+                    Ja
+                </div>
+                <div>
+                    Nej
+                </div> 
+            </span>
         </div>
     </div>
 </body>

@@ -1,0 +1,14 @@
+{
+    "lucky-bait": {
+        "name": "Lucky Bait",
+        "type": "beer",
+        "alco": 5.4,
+        "volume": 0.33
+    },
+    "norrlands-ljus": {
+        "name": "Norrlands Ljus",
+        "type": "beer",
+        "alco": 4.7,
+        "volume": 0.33
+    }
+}

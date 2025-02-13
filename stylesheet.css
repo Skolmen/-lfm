@@ -55,7 +55,7 @@ main {
     font-weight: bold;
 }
 
-#new-unit {
+.action-button {
     position: absolute;
     align-self: flex-end;
     justify-self: flex-end;
@@ -99,7 +99,7 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 80%;
+    width: 60%;
 }
 
 .unit-left p {
@@ -109,16 +109,20 @@ main {
 
 .unit-right {
     width: 20%;
-    font-size: 30px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
+}
+
+.unit-right span {
+    font-size: 30px;
 }
 
 .unit-right p {
     margin: 0;
     padding: 0;
+    text-align: center;
 }
 
 #settings {
@@ -155,7 +159,7 @@ footer {
     background-color: rgb(70, 70, 70);
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 footer div span {
@@ -238,4 +242,60 @@ footer div.active {
     border: none;
     border-radius: 20px;
     color: white;
+}
+
+.history-yes-no-window {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.767);
+    /* display: flex; */
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.history-yes-no-window > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: black;
+    width: 80%;
+    height: 180px;
+    padding: 20px;
+    border: 2px solid white;
+    box-sizing: border-box;
+}
+
+.history-yes-no-window > div > span:nth-child(1) {
+    font-size: 18px;
+}
+
+.history-yes-no-window > div > span:nth-child(1) > span {
+    font-weight: bold;
+}
+
+.history-yes-no-window > div > span:nth-child(2) {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin: 20px 0 20px 0;
+}
+
+.history-yes-no-window > div > span:nth-child(2) div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0 20px 0;
+    width: 70px;
+    height: 40px;
+    text-align: center;
+    background-color: red;
+}
+
+.first-drink {
+    background-color: rgb(78, 1, 122);
 }
