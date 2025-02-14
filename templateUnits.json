@@ -10,5 +10,17 @@
         "type": "beer",
         "alco": 4.7,
         "volume": 0.33
+    },
+    "gammel-dansk-4cl": {
+        "name": "Gammel Dansk 4cl",
+        "type": "spirit",
+        "alco": 38,
+        "volume": 0.04
+    },
+    "mariestads-33cl": {
+        "name": "Mariestads 33cl",
+        "type": "beer",
+        "alco": 5.3,
+        "volume": 0.33
     }
 }
