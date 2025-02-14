@@ -22,5 +22,11 @@
         "type": "beer",
         "alco": 5.3,
         "volume": 0.33
+    },
+    "eriksbergs-karaktar": {
+        "name": "Eriksbergs karaktär 33cl",
+        "type": "beer",
+        "alco": 5.4,
+        "volume": 0.33
     }
 }
