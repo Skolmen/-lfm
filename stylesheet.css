@@ -189,9 +189,10 @@ footer div.active {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     background-color: black;
     display: none;
+    overflow: auto;
 }
 
 .new-unit-window-top {
@@ -201,6 +202,9 @@ footer div.active {
     align-items: center;
     padding: 20px;
     box-sizing: border-box;
+    position: fixed;
+    background-color: black;
+    height: 87px;
 }
 
 .new-unit-window-top span {
@@ -209,6 +213,7 @@ footer div.active {
 
 .new-unit-window-content {
     padding: 20px;
+    margin-top: 87px;
 }
 
 .new-unit-window-content div {

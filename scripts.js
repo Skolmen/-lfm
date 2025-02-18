@@ -20,6 +20,8 @@ const MENUS = {
 
 const STANDARD_GENDER = 'male';
 const STANDARD_WEIGHT = 70;
+const ETHANOL_DENSITY = 0.789; // g/ml
+const METABOLISM_RATE = 0.15; // g/kg/h
 
 const SETTINGS = ['weight', 'gender'];
 
@@ -56,7 +58,7 @@ class Unit {
         this.alco = alco;
         
         this.id = this.generateId();
-        this.timestamp = Date.now(); // Corrected timestamp
+        this.timestamp = new Date(`${date}T${time}`).getTime();
     }
 
     generateId() {
@@ -176,9 +178,9 @@ function openNewUnitWindow() {
 
     const now = new Date();
 
-    const currentDate = now.toISOString().split('T')[0];
-
-    const currentTime = now.toTimeString().split(' ')[0].substring(0, 5);
+    const options = { timeZone: 'Europe/Stockholm', hour12: false };
+    const currentDate = now.toLocaleDateString('sv-SE', options).split(' ')[0];
+    const currentTime = now.toLocaleTimeString('sv-SE', options).substring(0, 5);
 
     date.value = currentDate;
     time.value = currentTime;
@@ -236,10 +238,6 @@ function closeNewUnitWindow() {
 }
 
 function addUnit() {
-
-    //TEMPORARY as the time thing is not working
-    return;
-
     const templateSelect = document.getElementById('new-unit-template').value;
     const date = document.getElementById('new-unit-date').value;
     const time = document.getElementById('new-unit-time').value;
@@ -254,6 +252,14 @@ function addUnit() {
 
     if (Object.keys(units).length === 0) {
         firstDrink = true;
+    }
+
+    let currentTime = new Date().getTime();
+    let timeToCheck = new Date(`${date}T${time}`).getTime();
+
+    if (timeToCheck > currentTime) {
+        alert('Du kan inte dricka i framtiden');
+        return;
     }
 
     try {
@@ -272,8 +278,12 @@ function addUnit() {
         units[unit.id] = unit;
         localStorage.setItem('units', JSON.stringify(units));
 
+        alert('Enheten har lagts till!');
+
     } catch (e) {
+        alert(e)
         console.error(e);
+        return;
     }
 
     closeNewUnitWindow();
@@ -291,7 +301,33 @@ function loadTemplateUnits() {
 }
 
 function calculatePromille() {
-    console.log('calculatePromille');
+    const units = JSON.parse(localStorage.getItem('units') || '{}');
+    const firstDrinkId = localStorage.getItem('firstDrink');
+    const weight = parseFloat(localStorage.getItem('weight')) || STANDARD_WEIGHT;
+    const gender = localStorage.getItem('gender') || 'male';
+
+    if (!firstDrinkId || !units[firstDrinkId]) {
+        document.getElementById('main-promille').textContent = '0,00 ‰';
+        return;
+    }
+
+    const firstDrinkTime = units[firstDrinkId].timestamp;
+    const currentTime = Date.now();
+    const hoursElapsed = (currentTime - firstDrinkTime) / 3600000;
+
+    // Beräkna totalt alkoholintag i gram sedan första drycken
+    let totalGrams = 0;
+    Object.values(units).forEach(unit => {
+        totalGrams += unit.volume * (unit.alco / 100) * ETHANOL_DENSITY * 1000;
+    });
+
+    const r = gender === 'male' ? 0.68 : 0.55;
+    const metabolizedGrams = METABOLISM_RATE * weight * hoursElapsed;
+    const remainingGrams = Math.max(totalGrams - metabolizedGrams, 0);
+    const promille = remainingGrams / (weight * r);
+
+    const formattedPromille = promille.toFixed(2).replace('.', ',');
+    document.getElementById('main-promille').textContent = `${formattedPromille} ‰`;
 }
 
 function updateHistory() {
@@ -323,6 +359,7 @@ function updateHistory() {
         const firstDrinkClass = firstDrink === key ? 'first-drink' : '';
         history.innerHTML += `<div class="unit ${firstDrinkClass}" id="${key}">
             <div class="unit-left">
+                <p>Datum: ${unit.date}</p>
                 <p>Intag: ${unit.time}</p>
                 <p>Typ: ${getNameFromType(unit.type)}</p>
                 <p>Volym: ${unit.volume.toString().replace('.', ',')} l</p>
@@ -494,7 +531,8 @@ function updatePromille() {
         timeElem.innerHTML = '--:--';
     }
 
-    promilleElem.innerHTML = '-- ‰';
+    calculatePromille();
+    // promilleElem.innerHTML = '-- ‰';
 }
 
 function setAsFirstDrink(value) {
@@ -504,6 +542,17 @@ function setAsFirstDrink(value) {
     if (!units) units = {};
 
     let firstDrink = localStorage.getItem('firstDrink');
+
+    if (firstDrink === value) {
+        //unset the first drink
+        localStorage.removeItem('firstDrink');
+        const firstDrinkElement = document.getElementById(value);
+        firstDrinkElement.classList.remove(firstDrinkClass);
+        updateHistory();
+        return;
+    }
+
+
     if (firstDrink) {
         const firstDrinkElement = document.getElementById(firstDrink);
         firstDrinkElement.classList.remove(firstDrinkClass);
