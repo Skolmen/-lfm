@@ -318,7 +318,10 @@ function calculatePromille() {
     // Beräkna totalt alkoholintag i gram sedan första drycken
     let totalGrams = 0;
     Object.values(units).forEach(unit => {
-        totalGrams += unit.volume * (unit.alco / 100) * ETHANOL_DENSITY * 1000;
+        if (unit.timestamp >= firstDrinkTime) {
+            totalGrams += unit.volume * (unit.alco / 100) * ETHANOL_DENSITY * 1000;
+            console.log(unit.time);            
+        }
     });
 
     const r = gender === 'male' ? 0.68 : 0.55;
