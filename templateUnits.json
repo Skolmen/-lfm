@@ -28,5 +28,11 @@
         "type": "beer",
         "alco": 5.4,
         "volume": 0.33
+    },
+    "ey-bro-33cl": {
+        "name": "Ey'Bro 33cl",
+        "type": "beer",
+        "alco": 5,
+        "volume": 0.33
     }
 }

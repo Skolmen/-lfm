@@ -258,7 +258,7 @@ function addUnit() {
     let timeToCheck = new Date(`${date}T${time}`).getTime();
 
     if (timeToCheck > currentTime) {
-        alert('Du kan inte dricka i framtiden');
+        displayPopup('Du kan inte dricka i framtiden', false);
         return;
     }
 
@@ -278,10 +278,9 @@ function addUnit() {
         units[unit.id] = unit;
         localStorage.setItem('units', JSON.stringify(units));
 
-        alert('Enheten har lagts till!');
-
+        displayPopup('Drycken har lagts till', true);
     } catch (e) {
-        alert(e)
+        displayPopup(e.message, false);
         console.error(e);
         return;
     }
@@ -567,4 +566,20 @@ function setAsFirstDrink(value) {
     localStorage.setItem('firstDrink', value);
 
     updateHistory();
+}
+
+function displayPopup(message, success) {
+    let color = success ? 'green' : 'red';
+
+    const popup = document.getElementById('popup');
+
+    popup.style.backgroundColor = color;
+
+    popup.style.display = 'flex';
+
+    popup.innerHTML = message;
+
+    setTimeout(() => {
+        popup.style.display = 'none';
+    }, 3000);
 }

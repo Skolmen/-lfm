@@ -307,3 +307,18 @@ footer div.active {
 .first-drink {
     background-color: rgb(78, 1, 122);
 }
+
+.popup {
+    position: fixed;
+    top: 3%; 
+    left: 10%; 
+    right: 10%;
+    height: 100px;
+    background-color: red;
+    z-index: 1000;
+    color: white;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}
