@@ -568,4 +568,3 @@ function setAsFirstDrink(value) {
 
     updateHistory();
 }
-
