@@ -41,10 +41,16 @@
         "alco": 5,
         "volume": 0.5
     },
-    "belini-33cl": {
-        "name": "Belini",
+    "belini-grape-33cl": {
+        "name": "Belini Grape",
         "type": "cider",
-        "alco": 5.4,
-        "volume": 0.5
+        "alco": 4.5,
+        "volume": 0.33
+    },
+    "belini-apple-33cl": {
+        "name": "Belini Apple",
+        "type": "cider",
+        "alco": 4.5,
+        "volume": 0.33
     }
 }
