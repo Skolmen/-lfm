@@ -40,5 +40,11 @@
         "type": "beer",
         "alco": 5,
         "volume": 0.5
+    },
+    "belini-33cl": {
+        "name": "Belini",
+        "type": "beer",
+        "alco": 5.4,
+        "volume": 0.5
     }
 }
