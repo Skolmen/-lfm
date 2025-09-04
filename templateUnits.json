@@ -52,5 +52,17 @@
         "type": "cider",
         "alco": 4.5,
         "volume": 0.33
+    },
+    "norrlands-guld-33cl": {
+        "name": "Norrlands guld",
+        "type": "beer",
+        "alco": 5.3,
+        "volume": 0.33
+    },
+    "original-grapefruit-33cl": {
+        "name": "Original Grapefruit",
+        "type": "alcopop",
+        "alco": 5.5,
+        "volume": 0.33
     }
 }
